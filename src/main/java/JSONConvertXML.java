@@ -37,7 +37,6 @@ public class JSONConvertXML {
 
             for(int i = 1; i < list.getLength(); i++) {
                 Node nList = list.item(i);
-                Element eElement = (Element) nList;
                 Map elementMap = new LinkedHashMap();
 
                for(int j=0; j < nList.getAttributes().getLength(); j++){
