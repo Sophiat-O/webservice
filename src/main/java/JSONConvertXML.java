@@ -29,7 +29,6 @@ public class JSONConvertXML {
             String rootNode = doc.getDocumentElement().getNodeName();
             NodeList list = doc.getElementsByTagName("*");
             Map books = new LinkedHashMap();
-            //Map elementMap = new LinkedHashMap();
 
             for(int k=0; k< doc.getDocumentElement().getAttributes().getLength();k++){
                 books.put(doc.getDocumentElement().getAttributes().item(k).getNodeName(),doc.getDocumentElement().getAttributes().item(k).getNodeValue());
@@ -40,37 +39,32 @@ public class JSONConvertXML {
                 Node nList = list.item(i);
                 Element eElement = (Element) nList;
                 Map elementMap = new LinkedHashMap();
-                //System.out.println(nList.getAttributes().getLength());
 
                for(int j=0; j < nList.getAttributes().getLength(); j++){
 
-
-                    //Map elementMap = new LinkedHashMap();
                     elementMap.put(nList.getAttributes().item(j).getNodeName(), nList.getAttributes().item(j).getNodeValue());
-
-
 
                 }
                 if(nList.getAttributes().getLength() > 1){
                     jsonArray.add(elementMap);
                 }
-                books.put(nList.getNodeName(),jsonArray);
-                //System.out.println(jsonArray);
-                //System.out.println(elementMap);
+                if(nList.hasChildNodes()) {
+                    books.put(nList.getChildNodes().item(i).getNodeName(), jsonArray);
+                }
+                else{
+                    books.put(nList.getNodeName(),jsonArray);
+                }
             }
 
-            //System.out.println(books);
-            //System.out.println(elementMap);
-            //System.out.println(jsonArray);
             jsonObject.put(rootNode,books);
-            System.out.println(jsonObject);
+            //System.out.println(jsonObject);
 
 
 
-//            PrintWriter pw = new PrintWriter("src/main/java/new_file3.json");
-//            pw.write(jsonObject.toJSONString());
-//            pw.flush();
-//            pw.close();
+            PrintWriter pw = new PrintWriter("src/main/java/created_file.json");
+            pw.write(jsonObject.toJSONString());
+            pw.flush();
+            pw.close();
 
 
         }catch (Exception e) {
