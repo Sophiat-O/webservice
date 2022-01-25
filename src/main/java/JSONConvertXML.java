@@ -23,6 +23,7 @@ public class JSONConvertXML {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
             JSONObject jsonObject = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
 
             doc.getDocumentElement().normalize();
             String rootNode = doc.getDocumentElement().getNodeName();
@@ -30,22 +31,37 @@ public class JSONConvertXML {
             Map books = new LinkedHashMap();
             //Map elementMap = new LinkedHashMap();
 
-            for(int i = 0; i < list.getLength(); i++) {
+            for(int k=0; k< doc.getDocumentElement().getAttributes().getLength();k++){
+                books.put(doc.getDocumentElement().getAttributes().item(k).getNodeName(),doc.getDocumentElement().getAttributes().item(k).getNodeValue());
+
+            }
+
+            for(int i = 1; i < list.getLength(); i++) {
                 Node nList = list.item(i);
                 Element eElement = (Element) nList;
                 Map elementMap = new LinkedHashMap();
+                //System.out.println(nList.getAttributes().getLength());
 
                for(int j=0; j < nList.getAttributes().getLength(); j++){
 
+
+                    //Map elementMap = new LinkedHashMap();
                     elementMap.put(nList.getAttributes().item(j).getNodeName(), nList.getAttributes().item(j).getNodeValue());
-                    books.put(nList.getNodeName(),elementMap);
+
+
 
                 }
-                //books.put(nList.getNodeName(),elementMap);
+                if(nList.getAttributes().getLength() > 1){
+                    jsonArray.add(elementMap);
+                }
+                books.put(nList.getNodeName(),jsonArray);
+                //System.out.println(jsonArray);
+                //System.out.println(elementMap);
             }
 
             //System.out.println(books);
             //System.out.println(elementMap);
+            //System.out.println(jsonArray);
             jsonObject.put(rootNode,books);
             System.out.println(jsonObject);
 
