@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book title="Artificial  Intelligence" publisher="Pearson">
+    <authors>
+        <author first="Peter"  last="Norvig"/>
+        <author first="Stuart"  last="Russell"/>
+    </authors>
+</book>

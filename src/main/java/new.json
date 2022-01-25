@@ -1,0 +1,7 @@
+{"osm":
+{"attribution":"http:\/\/www.openstreetmap.org\/copyright",
+  "copyright":"OpenStreetMap and contributors",
+  "generator":"CGImap 0.8.6 (2293752 spike-06.openstreetmap.org)",
+  "license":"http:\/\/opendatacommons.org\/licenses\/odbl\/1-0\/",
+  "version":"3",
+  "maxlat":"43.6157400","maxlon":"1.4394300","minlat":"43.6146600","minlon":"1.4381700","changeset":"63702052","id":"2601596","lat":"43.6150342","lon":"1.4380417","timestamp":"2018-10-20T12:04:13Z","uid":"2774341","user":"Floeditor","visible":"true","k":"type","v":"associatedStreet","ref":"2036692976","role":"house","type":"node"}}

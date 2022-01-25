@@ -1,0 +1,17 @@
+{ "messages":
+[{"subject":"Congrats",
+  "recipient": "Meike",
+  "sender": "Tolani",
+  "date": "17/01/2022",
+  "content": "Hey!, congrats on your new award!",
+  "categories": ["School", "Students"],
+  "content_type": "normal"},
+  {"subject":"Admission",
+    "recipient": "Tolani",
+    "sender": "Unversite Toulouse 1 Capitole",
+    "date": "20/04/2021",
+    "content": "Hello, you have been admitted to this course",
+    "categories": ["School", "Students"],
+    "content_type": "important"}
+]
+}
