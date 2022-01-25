@@ -47,21 +47,25 @@ public class JSONConvertXML {
                 }
                 if(nList.getAttributes().getLength() > 1){
                     jsonArray.add(elementMap);
-                }
-                if(nList.hasChildNodes()) {
-                    books.put(nList.getChildNodes().item(i).getNodeName(), jsonArray);
-                }
-                else{
-                    books.put(nList.getNodeName(),jsonArray);
+                    if(nList.hasChildNodes()) {
+                        books.put(nList.getChildNodes().item(i).getNodeName(), jsonArray);
+                    }
+                    else{
+                        books.put(nList.getNodeName(),jsonArray);
+                    }
+                }else {
+                    if(nList.hasChildNodes()) {
+                        books.put(nList.getChildNodes().item(i).getNodeName(), elementMap);
+                    }
+                    else{
+                        books.put(nList.getNodeName(),elementMap);
+                    }
                 }
             }
 
             jsonObject.put(rootNode,books);
-            //System.out.println(jsonObject);
 
-
-
-            PrintWriter pw = new PrintWriter("src/main/java/created_file.json");
+            PrintWriter pw = new PrintWriter("src/main/java/created_file1.json");
             pw.write(jsonObject.toJSONString());
             pw.flush();
             pw.close();

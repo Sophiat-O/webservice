@@ -1,0 +1,11 @@
+{"book":
+  {"publisher":"Pearson",
+    "title":"Artificial  Intelligence",
+    "author":[
+      {"first":"Peter",
+        "last":"Norvig"},
+      {"first":"Stuart",
+        "last":"Russell"}
+    ]
+  }
+}
