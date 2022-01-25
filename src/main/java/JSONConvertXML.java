@@ -23,7 +23,7 @@ public class JSONConvertXML {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
             JSONObject jsonObject = new JSONObject();
-            //JSONArray jsonArray = new JSONArray();
+            JSONArray jsonArrays = new JSONArray();
 
 
             doc.getDocumentElement().normalize();
@@ -45,7 +45,7 @@ public class JSONConvertXML {
                 NodeList eList = doc.getElementsByTagName(eElement.getNodeName());
                 Map elementMap = new LinkedHashMap();
                 Map oneElement = new LinkedHashMap();
-                //JSONArray jsonArray = new JSONArray();
+                JSONArray jsonArray = new JSONArray();
                 //System.out.println(eElement.getNodeName());
 
 
@@ -62,14 +62,32 @@ public class JSONConvertXML {
 
 
                 }else {
-                    JSONArray jsonArray = new JSONArray();
-                    for (int j = 0; j < nList.getAttributes().getLength(); j++) {
+                    JSONArray nArray = new JSONArray();
+                    if(nList.getAttributes().getLength() > 1) {
+                        for (int j = 0; j < nList.getAttributes().getLength(); j++) {
 
-                        elementMap.put(nList.getAttributes().item(j).getNodeName(), nList.getAttributes().item(j).getNodeValue());
-
+                            elementMap.put(nList.getAttributes().item(j).getNodeName(), nList.getAttributes().item(j).getNodeValue());
+                        }
+                        nArray.add(elementMap);
+                        jsonArray.add(nArray);
+                        jsonArrays.add(jsonArray);
+                        if(nList.hasChildNodes() && nchild !=null) {
+                            books.put(nchild.getNodeName(), jsonArrays);
+                        }
+                        else{
+                            books.put(nList.getNodeName(),jsonArrays);
+                        }
+                    }else {
+                        if(nList.hasChildNodes()) {
+                            books.put(nList.getChildNodes().item(i).getNodeName(), elementMap);
+                        }
+                        else{
+                            books.put(nList.getNodeName(),elementMap);
+                        }
                     }
-                    if(nList.getAttributes().getLength() > 1){
+                    /*if(nList.getAttributes().getLength() > 1){
                         jsonArray.add(elementMap);
+                        //jsonArrays.add(jsonArray);
 
                         if(nList.hasChildNodes() && nchild !=null) {
                             books.put(nchild.getNodeName(), jsonArray);
@@ -85,6 +103,7 @@ public class JSONConvertXML {
                             books.put(nList.getNodeName(),elementMap);
                         }
                     }
+                    System.out.println(jsonArray);*/
                 }
 
 
