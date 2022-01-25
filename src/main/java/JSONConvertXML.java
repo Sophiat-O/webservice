@@ -29,11 +29,13 @@ public class JSONConvertXML {
             NodeList list = doc.getElementsByTagName("*");
             Map books = new LinkedHashMap();
 
+            //get root node attribute
             for(int k=0; k< doc.getDocumentElement().getAttributes().getLength();k++){
                 books.put(doc.getDocumentElement().getAttributes().item(k).getNodeName(),doc.getDocumentElement().getAttributes().item(k).getNodeValue());
 
             }
 
+            //setting i to 1 to skip root node
             for(int i = 1; i < list.getLength(); i++) {
                 Node nList = list.item(i);
                 Map elementMap = new LinkedHashMap();
@@ -54,11 +56,12 @@ public class JSONConvertXML {
                 }
             }
 
+            //put all nodes and attributes in json object
             jsonObject.put(rootNode,books);
-            //System.out.println(jsonObject);
 
 
 
+            //Print the json object to file
             PrintWriter pw = new PrintWriter("src/main/java/created_file.json");
             pw.write(jsonObject.toJSONString());
             pw.flush();
