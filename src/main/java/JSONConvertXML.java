@@ -18,17 +18,20 @@ public class JSONConvertXML {
     public static void main(String[] args) {
 
         try {
-            File fXmlFile = new File("src/main/java/book.xml");
+            File fXmlFile = new File("src/main/java/map.osm");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
             JSONObject jsonObject = new JSONObject();
-            JSONArray jsonArray = new JSONArray();
+            //JSONArray jsonArray = new JSONArray();
+
 
             doc.getDocumentElement().normalize();
             String rootNode = doc.getDocumentElement().getNodeName();
             NodeList list = doc.getElementsByTagName("*");
             Map books = new LinkedHashMap();
+
+
 
             for(int k=0; k< doc.getDocumentElement().getAttributes().getLength();k++){
                 books.put(doc.getDocumentElement().getAttributes().item(k).getNodeName(),doc.getDocumentElement().getAttributes().item(k).getNodeValue());
@@ -37,35 +40,59 @@ public class JSONConvertXML {
 
             for(int i = 1; i < list.getLength(); i++) {
                 Node nList = list.item(i);
-                Element eElement = (Element) nList;
+                Node nchild = nList.getChildNodes().item(i);
+                Element eElement =(Element) nList;
+                NodeList eList = doc.getElementsByTagName(eElement.getNodeName());
                 Map elementMap = new LinkedHashMap();
+                Map oneElement = new LinkedHashMap();
+                //JSONArray jsonArray = new JSONArray();
+                //System.out.println(eElement.getNodeName());
 
-               for(int j=0; j < nList.getAttributes().getLength(); j++){
 
-                    elementMap.put(nList.getAttributes().item(j).getNodeName(), nList.getAttributes().item(j).getNodeValue());
 
-                }
-                if(nList.getAttributes().getLength() > 1){
-                    jsonArray.add(elementMap);
-                    if(nList.hasChildNodes()) {
-                        books.put(nList.getChildNodes().item(i).getNodeName(), jsonArray);
+                if(eList.getLength()==1){
+                    for (int j = 0; j < nList.getAttributes().getLength(); j++) {
+
+                        oneElement.put(nList.getAttributes().item(j).getNodeName(), nList.getAttributes().item(j).getNodeValue());
+
                     }
-                    else{
-                        books.put(nList.getNodeName(),jsonArray);
-                    }
+
+                    books.put(nList.getNodeName(),oneElement);
+
+
+
                 }else {
-                    if(nList.hasChildNodes()) {
-                        books.put(nList.getChildNodes().item(i).getNodeName(), elementMap);
+                    JSONArray jsonArray = new JSONArray();
+                    for (int j = 0; j < nList.getAttributes().getLength(); j++) {
+
+                        elementMap.put(nList.getAttributes().item(j).getNodeName(), nList.getAttributes().item(j).getNodeValue());
+
                     }
-                    else{
-                        books.put(nList.getNodeName(),elementMap);
+                    if(nList.getAttributes().getLength() > 1){
+                        jsonArray.add(elementMap);
+
+                        if(nList.hasChildNodes() && nchild !=null) {
+                            books.put(nchild.getNodeName(), jsonArray);
+                        }
+                        else{
+                            books.put(nList.getNodeName(),jsonArray);
+                        }
+                    }else {
+                        if(nList.hasChildNodes()) {
+                            books.put(nList.getChildNodes().item(i).getNodeName(), elementMap);
+                        }
+                        else{
+                            books.put(nList.getNodeName(),elementMap);
+                        }
                     }
                 }
+
+
             }
 
             jsonObject.put(rootNode,books);
 
-            PrintWriter pw = new PrintWriter("src/main/java/created_file1.json");
+            PrintWriter pw = new PrintWriter("src/main/java/maps.json");
             pw.write(jsonObject.toJSONString());
             pw.flush();
             pw.close();
