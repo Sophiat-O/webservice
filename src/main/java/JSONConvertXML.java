@@ -47,13 +47,21 @@ public class JSONConvertXML {
                 }
                 if(nList.getAttributes().getLength() > 1){
                     jsonArray.add(elementMap);
+                    if(nList.hasChildNodes() && nList.getChildNodes().item(i) != null) {
+                        books.put(nList.getChildNodes().item(i).getNodeName(), jsonArray);
+                    }
+                    else{
+                        books.put(nList.getNodeName(),jsonArray);
+                    }
+                }else{
+                    if(nList.hasChildNodes() && nList.getChildNodes().item(i) != null) {
+                        books.put(nList.getChildNodes().item(i).getNodeName(), elementMap);
+                    }
+                    else{
+                        books.put(nList.getNodeName(),elementMap);
+                    }
                 }
-                if(nList.hasChildNodes()) {
-                    books.put(nList.getChildNodes().item(i).getNodeName(), jsonArray);
-                }
-                else{
-                    books.put(nList.getNodeName(),jsonArray);
-                }
+
             }
 
             //put all nodes and attributes in json object
